@@ -4,23 +4,11 @@ use strict;
 use warnings;
 
 use Moose;
-use Document::TriPart::Cabinet::Carp;
 
 use Document::TriPart;
-use Hash::Merge::Simple qw/merge/;
 
 has cabinet => qw/is ro required 1/;
 has uuid => qw/is ro required 1/;
-
-sub now() {
-    return DateTime->now->set_time_zone('UTC')->strftime("%F %T %z");
-}
-
-sub BUILD {
-    my $self = shift;
-    $self->header->{uuid} = $self->uuid;
-    $self->creation( now );
-}
 
 has _tp => qw/is ro isa Document::TriPart lazy_build 1/, handles => [qw/ preamble header body /];
 sub _build__tp {
@@ -49,20 +37,23 @@ sub save {
     $self->cabinet->storage->save( $self );
 }
 
+sub _datetime {
+    return DateTime->now->set_time_zone('UTC')->strftime("%F %T %z");
+}
+
 sub edit {
     my $self = shift;
-    my $edit = shift;
 
-    if (defined $edit && ref $edit eq 'SCALAR') {
-        my $edit_document = Document::TriPart->read( $edit ) or croak "Unable to parse edit:\n$$edit";
-        $self->header( merge $self->header, $edit_document->header );
-        $self->body( $edit_document->body );
-    }
-    else {
-        $self->_tp->edit( tmp => 1 );
+    $self->header->{uuid} = $self->uuid;
+    my $new;
+    unless ($self->creation) {
+        $new = 1;
+        $self->creation( _datetime );
     }
 
-    $self->modification( now );
+    $self->_tp->edit( tmp => 1 );
+
+    $self->modification( _datetime ) unless $new;
 
     my $uuid = $self->header->{uuid};
     $self->{uuid} = Document::TriPart::Cabinet::UUID->normalize( $uuid );

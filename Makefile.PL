@@ -1,48 +1,64 @@
-use inc::Module::Install;
 
-name     'Document-TriPart-Cabinet';
-all_from 'lib/Document/TriPart/Cabinet.pm';
-author   'Robert Krimen <rkrimen@cpan.org>';
-license  'perl';
+use strict;
+use warnings;
 
-resources repository => 'http://github.com/robertkrimen/Document-TriPart-Cabinet/tree/master';
 
-{
-    require ExtUtils::MakeMaker;
-    use strict;
-    no strict 'refs';
 
-    my $libscan = \&{"ExtUtils::MM_Any::libscan"};
-    *{"ExtUtils::MM_Any::libscan"} = sub {
-        return '' unless $libscan->(@_);
-        return '' if $_[1] =~ /\.sw[p-z]$/;
-        return $_[1];
-    };
+use ExtUtils::MakeMaker 6.30;
+
+
+
+my %WriteMakefileArgs = (
+  'ABSTRACT' => 'Document::TriPart::Cabinet ',
+  'AUTHOR' => 'Robert Krimen <robertkrimen@gmail.com>',
+  'BUILD_REQUIRES' => {
+    'Test::Most' => '0'
+  },
+  'CONFIGURE_REQUIRES' => {
+    'ExtUtils::MakeMaker' => '6.30'
+  },
+  'DISTNAME' => 'Document-TriPart-Cabinet',
+  'EXE_FILES' => [],
+  'LICENSE' => 'perl',
+  'NAME' => 'Document::TriPart::Cabinet',
+  'PREREQ_PM' => {
+    'Carp::Clan' => '0',
+    'Data::UUID::LibUUID' => '0',
+    'DateTime' => '0',
+    'DateTimeX::Easy' => '0',
+    'Document::TriPart' => '0',
+    'File::Temp' => '0',
+    'Getopt::Chain' => '0',
+    'Moose' => '0',
+    'Path::Abstract' => '0',
+    'Path::Class' => '0',
+    'Term::Prompt' => '0',
+    'Text::ASCIITable' => '0'
+  },
+  'VERSION' => '0.011',
+  'test' => {
+    'TESTS' => 't/*.t'
+  }
+);
+
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
+  my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
+  my $pp = $WriteMakefileArgs{PREREQ_PM};
+  for my $mod ( keys %$br ) {
+    if ( exists $pp->{$mod} ) {
+      $pp->{$mod} = $br->{$mod} if $br->{$mod} > $pp->{$mod};
+    }
+    else {
+      $pp->{$mod} = $br->{$mod};
+    }
+  }
 }
 
-{
-    map { my ($pk, $vr) = split m/\s/; build_requires $pk => $vr || 0 } grep { ! /^\s*#/ } split m/\n/, <<_END_;
-Test::Most
-_END_
+delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.52) };
 
-    map { my ($pk, $vr) = split m/\s/; requires $pk => $vr || 0 } grep { ! /^\s*#/ } split m/\n/, <<_END_;
-Carp::Clan::Share
-Path::Abstract
-Data::UUID::LibUUID
-DateTimeX::Easy
-File::Temp
-Moose
-Path::Class
-_END_
-}
-
-if (-e 'inc/.author') {
-    my $all_from = join '/', 'lib', split m/-/, name . '.pm';
-    `perldoc -tF $all_from > README` if ! -e 'README' || (stat $all_from)[9] > (stat 'README')[9];
-}
+WriteMakefile(%WriteMakefileArgs);
 
 
-auto_install;
-
-WriteAll;
 

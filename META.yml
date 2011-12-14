@@ -1,33 +1,29 @@
 ---
-abstract: 'Keep Document::TriPart documents organized'
+abstract: 'Document::TriPart::Cabinet '
 author:
-  - 'Robert Krimen <rkrimen@cpan.org>'
+  - 'Robert Krimen <robertkrimen@gmail.com>'
 build_requires:
-  ExtUtils::MakeMaker: 6.42
   Test::Most: 0
 configure_requires:
-  ExtUtils::MakeMaker: 6.42
-distribution_type: module
-generated_by: 'Module::Install version 0.87'
+  ExtUtils::MakeMaker: 6.30
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.200008, CPAN::Meta::Converter version 2.110930'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: Document-TriPart-Cabinet
-no_index:
-  directory:
-    - inc
-    - t
-    - xt
 requires:
-  Carp::Clan::Share: 0
+  Carp::Clan: 0
   Data::UUID::LibUUID: 0
+  DateTime: 0
   DateTimeX::Easy: 0
+  Document::TriPart: 0
   File::Temp: 0
+  Getopt::Chain: 0
   Moose: 0
   Path::Abstract: 0
   Path::Class: 0
-resources:
-  license: http://dev.perl.org/licenses/
-  repository: http://github.com/robertkrimen/Document-TriPart-Cabinet/tree/master
-version: 0.001
+  Term::Prompt: 0
+  Text::ASCIITable: 0
+version: 0.011

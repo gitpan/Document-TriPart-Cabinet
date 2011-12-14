@@ -1,73 +1,15 @@
 NAME
-    Document::TriPart::Cabinet - Keep Document::TriPart documents organized
+    Document::TriPart::Cabinet - Document::TriPart::Cabinet
 
 VERSION
-    Version 0.001
-
-SYNOPSIS
-        use Document::TriPart::Cabinet
-
-        my $cabinet = Document::TriPart::Cabinet->new( storage => Document::TriPart::Cabinet::Storage::Disk->new( dir => $dir ) ); # Ugh, this feels like Java
-        my $document = $cabinet->create;
-
-        # Print out the document UUID
-        print $document->uuid, "\n";
-
-        $document->edit( \<<_END_ );
-        title: Xyzzy
-        abstract: apple
-        ---
-        The quick brown fox
-        _END_
-
-        # Inspect the creation & modification time
-        print $document->creation, "\n";
-        print $document->modification, "\n";
-
-        # ... Later, load the document by $uuid
-        $document = $cabinet->load( $uuid );
-
-SEE ALSO
-    Document::TriPart
+    version 0.011
 
 AUTHOR
-    Robert Krimen, "<rkrimen at cpan.org>"
+    Robert Krimen <robertkrimen@gmail.com>
 
-BUGS
-    Please report any bugs or feature requests to
-    "bug-document-tripart-cabinet at rt.cpan.org", or through the web
-    interface at
-    <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Document-TriPart-Cabinet
-    >. I will be notified, and then you'll automatically be notified of
-    progress on your bug as I make changes.
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2011 by Robert Krimen.
 
-SUPPORT
-    You can find documentation for this module with the perldoc command.
-
-        perldoc Document::TriPart::Cabinet
-
-    You can also look for information at:
-
-    *   RT: CPAN's request tracker
-
-        <http://rt.cpan.org/NoAuth/Bugs.html?Dist=Document-TriPart-Cabinet>
-
-    *   AnnoCPAN: Annotated CPAN documentation
-
-        <http://annocpan.org/dist/Document-TriPart-Cabinet>
-
-    *   CPAN Ratings
-
-        <http://cpanratings.perl.org/d/Document-TriPart-Cabinet>
-
-    *   Search CPAN
-
-        <http://search.cpan.org/dist/Document-TriPart-Cabinet/>
-
-ACKNOWLEDGEMENTS
-COPYRIGHT & LICENSE
-    Copyright 2009 Robert Krimen, all rights reserved.
-
-    This program is free software; you can redistribute it and/or modify it
-    under the same terms as Perl itself.
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
 

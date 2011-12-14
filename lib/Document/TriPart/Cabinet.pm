@@ -1,45 +1,11 @@
 package Document::TriPart::Cabinet;
+BEGIN {
+  $Document::TriPart::Cabinet::VERSION = '0.011';
+}
+# ABSTRACT: Document::TriPart::Cabinet 
 
 use warnings;
 use strict;
-
-=head1 NAME
-
-Document::TriPart::Cabinet - Keep Document::TriPart documents organized
-
-=head1 VERSION
-
-Version 0.001
-
-=cut
-
-our $VERSION = '0.001';
-
-=head1 SYNOPSIS
-
-    use Document::TriPart::Cabinet
-
-    my $cabinet = Document::TriPart::Cabinet->new( storage => Document::TriPart::Cabinet::Storage::Disk->new( dir => $dir ) ); # Ugh, this feels like Java
-    my $document = $cabinet->create;
-
-    # Print out the document UUID
-    print $document->uuid, "\n";
-
-    $document->edit( \<<_END_ );
-    title: Xyzzy
-    abstract: apple
-    ---
-    The quick brown fox
-    _END_
-
-    # Inspect the creation & modification time
-    print $document->creation, "\n";
-    print $document->modification, "\n";
-
-    # ... Later, load the document by $uuid
-    $document = $cabinet->load( $uuid );
-
-=cut
 
 use Moose;
 
@@ -85,64 +51,29 @@ sub edit {
     return $document;
 }
 
-=head1 SEE ALSO
+1;
 
-L<Document::TriPart>
+__END__
+=pod
+
+=head1 NAME
+
+Document::TriPart::Cabinet - Document::TriPart::Cabinet 
+
+=head1 VERSION
+
+version 0.011
 
 =head1 AUTHOR
 
-Robert Krimen, C<< <rkrimen at cpan.org> >>
+Robert Krimen <robertkrimen@gmail.com>
 
-=head1 BUGS
+=head1 COPYRIGHT AND LICENSE
 
-Please report any bugs or feature requests to C<bug-document-tripart-cabinet at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Document-TriPart-Cabinet>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
+This software is copyright (c) 2011 by Robert Krimen.
 
-
-
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc Document::TriPart::Cabinet
-
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Document-TriPart-Cabinet>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Document-TriPart-Cabinet>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Document-TriPart-Cabinet>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/Document-TriPart-Cabinet/>
-
-=back
-
-
-=head1 ACKNOWLEDGEMENTS
-
-
-=head1 COPYRIGHT & LICENSE
-
-Copyright 2009 Robert Krimen, all rights reserved.
-
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
-
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
 
-1; # End of Document::TriPart::Cabinet
